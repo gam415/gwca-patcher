@@ -15,10 +15,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if bytes == scan_code {
       let mut count_remaining = 2;
 
-      for j in 0..0x200 {
-        let bytes = &data[i+j..i+j+INNER_SCAN_CODE_LENGTH];
+      for j in i..i+0x200 {
+        let bytes = &data[j..j+INNER_SCAN_CODE_LENGTH];
         if bytes == inner_scan_code {
-          data[i+j+4] = 0xEB; // change JNZ to JMP
+          data[j+4] = 0xEB; // change JNZ to JMP
           count_remaining = count_remaining - 1;
 
           if count_remaining == 0 {
