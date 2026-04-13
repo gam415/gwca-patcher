@@ -1,0 +1,28 @@
+# This workflow keeps the fork's "main" branch identical to upstream.
+#
+# SETUP (one-time):
+#   1. Create a dedicated branch:  git switch --orphan sync && git commit --allow-empty -m "init sync branch"
+#   2. Place this workflow file on that branch and push it.
+#   3. In repo Settings → General → Default branch, change the default to "sync".
+#
+# WHY: GitHub Actions only runs scheduled workflows from the default branch.
+#      By using a separate default branch, "main" stays a pristine mirror of upstream.
+
+name: Sync fork with upstream
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync main with upstream
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh repo sync ${{ github.repository }} --branch main --force
