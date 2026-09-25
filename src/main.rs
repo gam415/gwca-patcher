@@ -8,7 +8,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
   const SCAN_CODE_LENGTH: usize = 5;
   let scan_code: [u8; SCAN_CODE_LENGTH] = [0x2d, 0x20, 0x00, 0x00, 0x10];
   const INNER_SCAN_CODE_LENGTH: usize = 5;
-  let inner_scan_code: [u8; INNER_SCAN_CODE_LENGTH] = [0x59, 0x59, 0x84, 0xc0, 0x75];
+  let inner_scan_code: [u8; INNER_SCAN_CODE_LENGTH] = [0xff, 0xd6, 0x84, 0xc0, 0x75];
 
   for i in 0..(data.len() - SCAN_CODE_LENGTH) {
     let bytes = &data[i..i+SCAN_CODE_LENGTH];
