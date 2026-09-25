@@ -2,6 +2,10 @@ name: Check for releases
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Vanilla toolbox tag to use to obtain gwca.dll
+        type: string
 
 permissions:
   contents: write
@@ -20,8 +24,8 @@ jobs:
         id: check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag }}
         run: |
-          TAG=$(gh api repos/gwdevhub/GWToolboxpp/releases/latest --jq .tag_name)
           echo "Latest upstream release tag: $TAG"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
